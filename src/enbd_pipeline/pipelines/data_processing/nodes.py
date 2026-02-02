@@ -40,6 +40,9 @@ def preprocess_shuttles(shuttles: pd.DataFrame) -> pd.DataFrame:
         Preprocessed data, with `price` converted to a float and `d_check_complete`,
         `moon_clearance_complete` converted to boolean.
     """
+    initial_count = len(shuttles)
+    shuttles = shuttles[shuttles["price"] >0]
+    print(f"DEBUG: Filtered out {initial_count - len(shuttles)} rows with invalid prices. ")
     shuttles["d_check_complete"] = _is_true(shuttles["d_check_complete"])
     shuttles["moon_clearance_complete"] = _is_true(shuttles["moon_clearance_complete"])
     shuttles["price"] = _parse_money(shuttles["price"])
